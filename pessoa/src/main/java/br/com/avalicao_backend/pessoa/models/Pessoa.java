@@ -31,7 +31,7 @@ public class Pessoa  implements Serializable{
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy =  GenerationType.AUTO)
-    private long codigo;
+    private long id;
     @Column(name = "nome")
     private String nome;
     @JsonFormat(pattern = "dd/MM/yyyy")

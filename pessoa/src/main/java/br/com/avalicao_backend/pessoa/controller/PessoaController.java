@@ -8,7 +8,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,34 +19,36 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.avalicao_backend.pessoa.models.Pessoa;
 import br.com.avalicao_backend.pessoa.repository.PessoaRepository;
 import jakarta.validation.Valid;
+import br.com.avalicao_backend.pessoa.service.PessoaService;
 
 
 
 @RestController
+@RequestMapping("/pessoa")
 public class PessoaController {
     @Autowired
     private PessoaRepository _pessoaRepository;
+
+    @Autowired
+    private PessoaService service;
+
 
     @RequestMapping(value = "/pessoa", method = RequestMethod.GET)
     public List<Pessoa> Get() {
         return _pessoaRepository.findAll();
     }
 
-    @RequestMapping(value = "/pessoa/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Pessoa> GetById(@PathVariable(value = "id") long id)
+    @GetMapping(value = "{id}")
+    public ResponseEntity<?> buscarPorIdPEssoa(@PathVariable long id)
     {
-        Optional<Pessoa> pessoa = _pessoaRepository.findById(id);
-        if(pessoa.isPresent())
-            return new ResponseEntity<Pessoa>(pessoa.get(), HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return service.buscarPorIdPessoa(id);
     }
 
     // SALVAR PESSOA
-    @RequestMapping(value = "/pessoa", method =  RequestMethod.POST)
-    public Pessoa Post(@Valid @RequestBody Pessoa pessoa)
+    @PostMapping
+    public ResponseEntity<?> salvarPessoa( @RequestBody Pessoa pessoa)
     {
-        return _pessoaRepository.save(pessoa);
+        return service.salvarPessoa(pessoa);
     }
 
     @RequestMapping(value = "/pessoa/{id}", method =  RequestMethod.PUT)
