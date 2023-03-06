@@ -1,10 +1,10 @@
 # avalicao_dev_backend
 
 Este projeto propõe avaliar os seguintes temas: 
-	Qualidade de código
-	Java, Spring boot
-	API REST
-	Testes
+•	Qualidade de código
+•	Java, Spring boot
+•	API REST
+•	Testes
 
 
 Usando Spring boot, criei uma API simples para gerenciar Pessoas. Este API deve permitir:  
